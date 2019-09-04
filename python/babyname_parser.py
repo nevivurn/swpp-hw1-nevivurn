@@ -50,8 +50,12 @@ def check_filename_existence(func):
     Raises:
         BabynameFileNotFoundException: if there is no such file named as the first argument of the function to decorate.
     """
-    # TODO: Implement this decorator.
+    def inner(self, filename):
+        if os.path.isfile(filename):
+            return func(self, filename)
+        raise BabynameFileNotFoundException('No such babyname file or directory: {0}'.format(filename))
 
+    return inner
 
 class BabynameParser:
 
@@ -66,7 +70,8 @@ class BabynameParser:
             filename: The filename to parse.
         """
 
-        text = "File is not read yet"  # TODO: Open and read the given file.
+        with open(filename) as f:
+            text = f.read()
         # Could process the file line-by-line, but regex on the whole text at once is even easier.
 
         # The year extracting code is provided. Implement the tuple extracting code by using this.
@@ -79,7 +84,7 @@ class BabynameParser:
 
         # Extract all the data tuples with a findall()
         # each tuple is: (rank, male-name, female-name)
-        self.rank_to_names_tuples = []  # TODO: Extract the list of rank to names tuples.
+        self.rank_to_names_tuples = re.findall(r'<tr align="right"><td>(\d+)</td><td>(.+?)</td><td>(.+?)</td>', text)
 
     def parse(self, parsing_lambda):
         """
@@ -92,4 +97,4 @@ class BabynameParser:
         Returns:
             The list of parsed babynames.
         """
-        # TODO: Implement this method.
+        return [parsing_lambda(x) for x in self.rank_to_names_tuples]
