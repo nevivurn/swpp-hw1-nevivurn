@@ -45,7 +45,7 @@ def main():
     parsed_femalenames = parser.parse(lambda x: x[2])
 
     # Find the common popular names.
-    common_names = sorted([name for name in parsed_malenames if name in parsed_femalenames])
+    common_names = sorted(set(parsed_malenames) & set(parsed_femalenames))
     common_names = ['{}: {}, {}'.format(name, parsed_malenames.index(name)+1, parsed_femalenames.index(name)+1) for name in common_names]
 
     # Print your result.
