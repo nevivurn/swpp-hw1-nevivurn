@@ -24,7 +24,7 @@ class Form {
 
   wrongFields() {
     var fields = [];
-    if (!/^[^@\.\s]+@[^@\.\s]+\.[a-z]{2,3}$/.test(this.email)) {
+    if (!/^[^@\s]+@[^@\.\s]+\.[a-z]{2,3}$/.test(this.email)) {
       fields.push('email');
     }
     if (!/[0-9]/.test(this.password) || !/[a-z]/.test(this.password) || !/[A-Z]/.test(this.password) || this.password.length < 8) {
@@ -78,7 +78,11 @@ but.onclick = function() {
     fname, lname, age, birth_month, birth_day, birth_year);
 
   var field_desc = {
-    email: ['Email', "characters@characters.domain (characters other than @ or whitespace followed by an @ sign, followed by more characters (not '@', '.', or whitespace: co.kr is not allowed in this case), and then a \".\". After the \".\", you can only write 2 to 3 letters from a to z)."],
+	  email: ['Email', `characters other than @ or whitespace followed by an @ sign, followed by more characters (not '@', '.', or whitespace: co.kr is not allowed in this case), and then a ".". After the ".", you can only write 2 to 3 letters from a to z.
+  - \`characters(except for whitespace and '@')\` **@** \`characters(except for whitespace, '@' and '.')\` **.** \`2-3 alphabets\` 
+  - *characters* mean one or more characters including alphabets, numbers or special characters.
+  - *alphabets* include both lowercase and uppercase.
+  - e.g.) valid@javascript.com (O), invalid@snu.ac.kr (X)`],
     password: ['Password', 'Must contain at least one number and one uppercase and one lowercase letter, and at least 8 or more characters.'],
     password_confirmation: ['Password Confirmation', 'Must match password.'],
     phone_number: ['Phone number', 'nnn-nnnn-nnnn: three numbers, then "-", followed by four numbers and a "-", then four numbers.'],
